@@ -211,8 +211,8 @@ void audio_set_958outbuf(u32 addr, u32 size, int flag)
 i2s mode 0: master 1: slave
 din_sel 0:spdif 1:i2s 2:pcm 3: dmic
 */
-static void i2sin_fifo0_set_buf(u32 addr, u32 size, u32 i2s_mode,
-		u32 i2s_sync, u32 din_sel, u32 ch)
+static void i2sin_fifo0_set_buf(u32 addr, u32 size,
+				u32 i2s_mode, u32 i2s_sync, u32 din_sel)
 {
 	unsigned char mode = 0;
 	unsigned int sync_mode = 0, din_pos = 0;
@@ -249,7 +249,6 @@ static void i2sin_fifo0_set_buf(u32 addr, u32 size, u32 i2s_mode,
 				   | (!mode << I2SIN_LRCLK_SEL)
 				   | (!mode << I2SIN_CLK_SEL)
 				   | (!mode << I2SIN_DIR));
-
 	} else if (audio_in_source == 1) {
 		aml_audin_write(AUDIN_I2SIN_CTRL, (1 << I2SIN_CHAN_EN)
 				   | (0 << I2SIN_SIZE)
@@ -321,7 +320,11 @@ static void spdifin_fifo1_set_buf(u32 addr, u32 size, u32 src)
 	aml_audin_write(AUDIN_FIFO1_CTRL, (1 << AUDIN_FIFO1_EN)	/* FIFO0_EN */
 		       |(1 << AUDIN_FIFO1_LOAD)	/* load start address. */
 		       |(src << AUDIN_FIFO1_DIN_SEL)
-		       |(4 << AUDIN_FIFO1_ENDIAN) /* AUDIN_FIFO0_ENDIAN */
+
+		       /* DIN from i2sin. */
+		       /* |(1<<6)   // 32 bits data in. */
+		       /* |(0<<7)   // put the 24bits data to  low 24 bits */
+		       | (4 << AUDIN_FIFO1_ENDIAN)	/* AUDIN_FIFO0_ENDIAN */
 		       |(2 << AUDIN_FIFO1_CHAN)	/* 2 channel */
 		       |(1 << AUDIN_FIFO1_UG)	/* Urgent request. */
 	);
@@ -353,10 +356,10 @@ static void spdifin_fifo1_set_buf(u32 addr, u32 size, u32 src)
 }
 
 void audio_in_i2s_set_buf(u32 addr, u32 size,
-	u32 i2s_mode, u32 i2s_sync, u32 din_sel, u32 ch)
+	u32 i2s_mode, u32 i2s_sync, u32 din_sel)
 {
-	pr_debug("i2sin_fifo0_set_buf din_sel:%d ch:%d\n", din_sel, ch);
-	i2sin_fifo0_set_buf(addr, size, i2s_mode, i2s_sync, din_sel, ch);
+	pr_info("i2sin_fifo0_set_buf\n");
+	i2sin_fifo0_set_buf(addr, size, i2s_mode, i2s_sync, din_sel);
 	audio_in_buf_ready = 1;
 }
 
