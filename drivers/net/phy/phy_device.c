@@ -1080,10 +1080,10 @@ void internal_config(struct phy_device *phydev)
 	/*programme fraction FR_PLL_DiV1*/
 	phy_write(phydev, 0x17, 0xAAAA);
 	phy_write(phydev, 0x14, 0x5C1C);
-	pr_info("set driving length c\n");
+	// pr_info("set driving length c\n");
 	phy_write(phydev, 0x17, 0x000c);
 	phy_write(phydev, 0x14, 0x4418);
-	pr_info("set PLL minimum jitter\n");
+	// pr_info("set PLL minimum jitter\n");
 	phy_write(phydev, 0x17, 0x1A0C);
 	phy_write(phydev, 0x14, 0x4417); /* A6_CONFIG */
 	phy_write(phydev, 0x17, 0x6400);

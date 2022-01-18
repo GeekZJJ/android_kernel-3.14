@@ -202,6 +202,7 @@ static u32 getkeycode(struct remote_dev *dev, u32 scancode)
 		dev_err(chip->dev, "cur_custom is nulll\n");
 		return KEY_RESERVED;
 	}
+    printk(KERN_ERR "%s,scancode=0x%04x\n",__func__, scancode);
 
 	/*return BTN_LEFT in mouse mode*/
 	if (ct->ir_dev_mode == MOUSE_MODE &&
@@ -242,6 +243,7 @@ static bool is_valid_custom(struct remote_dev *dev)
 		return true;
 	custom_code = chip->ir_contr[chip->ir_work].get_custom_code(chip);
 	chip->cur_tab = seek_map_tab(chip, custom_code);
+    printk(KERN_ERR "%s,custom_code=0x%04x\n",__func__, custom_code);
 	if (chip->cur_tab) {
 		dev->keyup_delay = chip->cur_tab->tab.release_delay;
 		return true;

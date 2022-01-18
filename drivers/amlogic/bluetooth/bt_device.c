@@ -133,14 +133,14 @@ static void bt_device_off(struct bt_dev_data *pdata)
 static int bt_set_block(void *data, bool blocked)
 {
 	struct bt_dev_data *pdata = data;
-	pr_info("BT_RADIO going: %s\n", blocked ? "off" : "on");
+	// pr_info("BT_RADIO going: %s\n", blocked ? "off" : "on");
 
 	if (!blocked) {
-		pr_err("BCM_BT: going ON\n");
+		// pr_err("BCM_BT: going ON\n");
 		bt_device_on(pdata);
 	} else {
-		pr_err("BCM_BT: going OFF\n");
-	bt_device_off(pdata);
+		// pr_err("BCM_BT: going OFF\n");
+		bt_device_off(pdata);
 	}
 	return 0;
 }

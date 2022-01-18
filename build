@@ -1,0 +1,18 @@
+#!/bin/sh
+
+export ARCH=arm64 
+export CROSS_COMPILE=aarch64-linux-gnu-
+export INSTALL_MOD_STRIP=1
+export INSTALL_MOD_PATH=ko
+export LOADADDR="0x1080000"
+export KBUILD_OUTPUT=out
+
+mkdir -p $KBUILD_OUTPUT
+make distclean
+make mgv2000_defconfig
+
+make gxlx_p279.dtb gxl_p281_1g.dtb  Image.gz modules modules_install
+mkimage -A arm64 -O linux -T kernel -C none -a ${LOADADDR} -e ${LOADADDR} -n linux-next -d $KBUILD_OUTPUT/arch/arm64/boot/Image ${LOADADDR}/uImage
+
+# gpu driver https://github.com/khadas/android_hardware_arm_gpu.git
+make -C $KBUILD_OUTPUT M=/path/to/mali ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE CONFIG_MALI400=m  CONFIG_MALI450=m EXTRA_CFLAGS="-DCONFIG_MALI400=m -DCONFIG_MALI450=m" CONFIG_GPU_THERMAL=y CONFIG_AM_VDEC_H264_4K2K=y modules

@@ -12,22 +12,20 @@
 		#cooling-cells = <2>; /* min followed by max */
 		compatible = "arm,mali-450";
 		interrupt-parent = <&gic>;
-		reg = <0 0xd00c0000 0 0x40000>, /*mali APB bus base address*/
-		      <0 0xc1104440 0 0x01000>, /*reset register*/
-		      <0 0xc8100000 0 0x01000>, /*aobus  base address for gpu pmu domain*/
-		      <0 0xc883c000 0 0x01000>, /*hiubus base address for gpu clk cntl*/
-		      <0 0xc1104440 0 0x01000>;
+		reg = <0x00 0xd00c0000 0x00 0x40000>, /*mali APB bus base address*/
+		      <0x00 0xc883c000 0x00 0x04>, /*reset register*/
+			  <0x00 0xc8100000 0x00 0x04>, /*aobus  base address for gpu pmu domain*/
+		      <0x00 0xc883c000 0x00 0x100>, /*hiubus base address for gpu clk cntl*/
+		      <0x00 0xc1104440 0x00 0x100>;
 		interrupts = <0 160 4>, <0 161 4>, <0 162 4>, <0 163 4>,
-				   <0 164 4>, <0 165 4>, <0 166 4>, <0 167 4>,
-				   <0 168 4>, <0 169 4>;
+				   <0 164 4>, <0 165 4>, <0 166 4>, <0 167 4>;
 		interrupt-names = "IRQGP", "IRQGPMMU", "IRQPP", "IRQPMU",
-			"IRQPP0", "IRQPPMMU0", "IRQPP1", "IRQPPMMU1",
-			"IRQPP2", "IRQPPMMU2";
-		pmu_domain_config = <0x1 0x2 0x4 0x4 0x0 0x0 0x0 0x0 0x0 0x1 0x2 0x0>;
+			"IRQPP0", "IRQPPMMU0", "IRQPP1", "IRQPPMMU1";
+		pmu_domain_config = <0x1 0x2 0x4 0x0 0x0 0x0 0x0 0x0 0x0 0x1 0x2 0x0>;
 		pmu_switch_delay = <0xffff> ;
-		num_of_pp = <3> ;
+		num_of_pp = <2> ;
 		def_clock = <3> ;
-		sc_mpp = <3>;/* number of pp used most of time.*/
+		sc_mpp = <2>;/* number of pp used most of time.*/
 		tbl = <&clk125_cfg &clk285_cfg &clk400_cfg &clk500_cfg &clk666_cfg &clk800_cfg>;
 
 		clocks = <&clock CLK_FPLL_DIV3>,
@@ -57,7 +55,7 @@
 			clkp_freq = <500000000>;
 			voltage = <1150>;
 			keep_count = <5>;
-			threshold = <30 250>;
+			threshold = <30 120>;
 		  };
 
 		  clk250_cfg:clk250_cfg {
@@ -66,7 +64,7 @@
 			clkp_freq = <500000000>;
 			voltage = <1150>;
 			keep_count = <5>;
-			threshold = <115 250>;
+			threshold = <80 170>;
 			/*125 = 250*(125/250), 50= 60-10*/
 		  };
 
@@ -76,7 +74,7 @@
 			clkp_freq = <285000000>;
 			voltage = <1150>;
 			keep_count = <5>;
-			threshold = <100 250>;
+			threshold = <100 190>;
 			/*109 = 250*(125/285)*/
 		  };
 
@@ -85,8 +83,8 @@
 			clk_parent = "fclk_div5";
 			clkp_freq = <400000000>;
 			voltage = <1150>;
-			keep_count = <3>;
-			threshold = <168 250>;
+			keep_count = <5>;
+			threshold = <152 207>;
 			/*178 = 250*(285/400)*/
 		  };
 
@@ -95,8 +93,8 @@
 			clk_parent = "fclk_div4";
 			clkp_freq = <500000000>;
 			voltage = <1150>;
-			keep_count = <2>;
-			threshold = <190 250>;
+			keep_count = <5>;
+			threshold = <180 220>;
 			/*200=250*(400/500)*/
 		  };
 
@@ -105,8 +103,8 @@
 			clk_parent = "fclk_div3";
 			clkp_freq = <666000000>;
 			voltage = <1150>;
-			keep_count = <1>;
-			threshold = <177 250>;
+			keep_count = <5>;
+			threshold = <210 236>;
 			/*187.5=250*(500/666.6)*/
 		  };
 
@@ -115,8 +113,8 @@
 			clk_parent = "gp0_pll";
 			clkp_freq = <744000000>;
 			voltage = <1150>;
-			keep_count = <1>;
-			threshold = <213 255>;
+			keep_count = <5>;
+			threshold = <230 255>;
 			/*223=250*(666.0/744.0), 223+7=230*/
 		  };
 
@@ -125,7 +123,7 @@
 			clk_parent = "gp0_pll";
 			clkp_freq = <792000000>;
 			voltage = <1150>;
-			keep_count = <1>;
+			keep_count = <5>;
 			threshold = <230 255>;
 		  };
 

@@ -113,7 +113,7 @@ int register_video_firamre_per_cpu(int cputype, enum vformat_e type,
 {
 	struct video_firmware_s *firmware;
 	if (cputype != get_cpu_type()) {
-		/*pr_info("ignored firmware %s for cpu:%x\n", name, cputype);*/
+		// pr_err("ignored firmware %s for cpu:%x\n", name, cputype);
 		return 0;	/* ignore don't needed firmare. */
 	}
 	firmware = kmalloc(sizeof(struct video_firmware_s) + size, GFP_KERNEL);
@@ -127,7 +127,7 @@ int register_video_firamre_per_cpu(int cputype, enum vformat_e type,
 	firmware->next = NULL;
 	firmware->ref_cnt = 0;
 	memcpy((void *)firmware->ucode, (void *)code, size);
-	/* pr_info("register firmware %s for cpu:%x\n", name, cputype);*/
+	// pr_err("register firmware %s for cpu:%x\n", name, cputype);
 	return register_video_firamre_in(firmware);
 }
 

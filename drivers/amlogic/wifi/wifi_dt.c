@@ -705,12 +705,12 @@ static int wifi_dev_probe(struct platform_device *pdev)
 		if (of_get_property(pdev->dev.of_node,
 			"pinctrl-names", NULL)) {
 			unsigned int pwm_misc;
-			if (get_cpu_type() >= MESON_CPU_MAJOR_ID_GXTVBB) {
-				pwm_double_channel_conf_dt(plat);
-				pwm_double_channel_conf(plat);
-			} else if (get_cpu_type() == MESON_CPU_MAJOR_ID_GXBB) {
+			if (get_cpu_type() == MESON_CPU_MAJOR_ID_GXBB/* || get_cpu_type() == MESON_CPU_MAJOR_ID_GXLX */) {
 				pwm_single_channel_conf_dt(plat);
 				pwm_single_channel_conf(plat);
+			} else if (get_cpu_type() >= MESON_CPU_MAJOR_ID_GXTVBB) {
+				pwm_double_channel_conf_dt(plat);
+				pwm_double_channel_conf(plat);
 			} else if (get_cpu_type() == MESON_CPU_MAJOR_ID_M8B) {
 				/* pwm_e */
 				WIFI_INFO("set pwm as 32k output");

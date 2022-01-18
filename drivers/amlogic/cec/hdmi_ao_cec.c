@@ -914,6 +914,7 @@ static int get_line(void)
 		ret = (reg & (1 << 12));
 		break;
 	case MESON_CPU_MAJOR_ID_GXL:
+	case MESON_CPU_MAJOR_ID_GXLX:
 	case MESON_CPU_MAJOR_ID_GXM:
 		ret = (reg & (1 <<  8));
 		break;

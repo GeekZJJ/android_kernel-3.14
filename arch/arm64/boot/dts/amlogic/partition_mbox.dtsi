@@ -7,8 +7,8 @@
  *
  */
  / {
-    partitions: partitions{
-        parts = <10>;
+	partitions {
+		parts = <0x0c>;
 		part-0 = <&logo>;
 		part-1 = <&recovery>;
 		part-2 = <&rsv>;
@@ -18,61 +18,80 @@
 		part-6 = <&boot>;
 		part-7 = <&system>;
 		part-8 = <&cache>;
-		part-9 = <&data>;
+		part-9 = <&params>;
+		part-10 = <&bootfiles>;
+		part-11 = <&data>;
 
-		logo:logo{
+		logo:logo {
 			pname = "logo";
-			size = <0x0 0x2000000>;
-			mask = <1>;
+			size = <0x00 0x2000000>;
+			mask = <0x01>;
 		};
-		recovery:recovery{
+
+		recovery:recovery {
 			pname = "recovery";
-			size = <0x0 0x2000000>;
-			mask = <1>;
+			size = <0x00 0x2000000>;
+			mask = <0x01>;
 		};
-		rsv:rsv{
+
+		rsv:rsv {
 			pname = "rsv";
-			size = <0x0 0x800000>;
-			mask = <1>;
+			size = <0x00 0x800000>;
+			mask = <0x01>;
 		};
-		tee:tee{
+
+		tee:tee {
 			pname = "tee";
-			size = <0x0 0x800000>;
-			mask = <1>;
+			size = <0x00 0x800000>;
+			mask = <0x01>;
 		};
-		crypt:crypt{
+
+		crypt:crypt {
 			pname = "crypt";
-			size = <0x0 0x2000000>;
-			mask = <1>;
+			size = <0x00 0x2000000>;
+			mask = <0x01>;
 		};
-		misc:misc{
+
+		misc:misc {
 			pname = "misc";
-			size = <0x0 0x2000000>;
-			mask = <1>;
+			size = <0x00 0x2000000>;
+			mask = <0x01>;
 		};
-		boot:boot
-		{
+
+		boot:boot {
 			pname = "boot";
-			size = <0x0 0x2000000>;
-			mask = <1>;
+			size = <0x00 0x2000000>;
+			mask = <0x01>;
 		};
-		system:system
-		{
+
+		system:system {
 			pname = "system";
-			size = <0x0 0x80000000>;
-			mask = <1>;
+			size = <0x00 0x40000000>;
+			mask = <0x01>;
 		};
-		cache:cache
-		{
+
+		cache:cache {
 			pname = "cache";
-			size = <0x0 0x20000000>;
-			mask = <2>;
+			size = <0x00 0x20000000>;
+			mask = <0x02>;
 		};
-		data:data
-		{
+
+		params:params {
+			pname = "params";
+			size = <0x00 0x4000000>;
+			mask = <0x02>;
+		};
+
+		bootfiles:bootfiles {
+			pname = "bootfiles";
+			size = <0x00 0x20000000>;
+			mask = <0x02>;
+		};
+
+		data:data {
 			pname = "data";
 			size = <0xffffffff 0xffffffff>;
-			mask = <4>;
+			mask = <0x04>;
 		};
 	};
  };/* end of / */

@@ -34,7 +34,7 @@ static long remote_ioctl(struct file *file, unsigned int cmd,
 	int retval = 0;
 
 	if (!parg) {
-		dev_err(chip->dev, "%s invalid user space pointer\n", __func__);
+		dev_err(chip->dev, "%s invalid user space pointer, %lu\n", __func__, arg);
 		return -EINVAL;
 	}
 
@@ -130,9 +130,9 @@ static int remote_release(struct inode *inode, struct file *file)
 static const struct file_operations remote_fops = {
 	.owner = THIS_MODULE,
 	.open = remote_open,
-#ifdef CONFIG_COMPAT
+// #ifdef CONFIG_COMPAT
 	.compat_ioctl = remote_ioctl,
-#endif
+// #endif
 	.unlocked_ioctl = remote_ioctl,
 	.release = remote_release,
 };

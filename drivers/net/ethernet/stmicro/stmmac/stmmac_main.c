@@ -3438,7 +3438,7 @@ static void moniter_tx_handler(struct work_struct *work)
 			if (c_phy_dev->link) {
 				if (priv->dev->stats.tx_packets > 100) {
 					if (priv->dev->stats.rx_packets == 0) {
-						pr_info("rx stop, recover eth\n");
+						// pr_info("rx stop, recover eth\n");
 						stmmac_release(priv->dev);
 						stmmac_open(priv->dev);
 					}

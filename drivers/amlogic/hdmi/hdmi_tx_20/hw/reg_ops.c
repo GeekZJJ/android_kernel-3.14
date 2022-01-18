@@ -70,11 +70,11 @@ static struct reg_map reg_maps_def[] = {
 		.size = 0x100,
 	},
 	[HDMITX_SEC_REG_IDX] = { /* HDMITX SECURE */
-		.phy_addr = 0xda83a000,
+		.phy_addr = 0xda800000,
 		.size = 0x2000,
 	},
 	[HDMITX_REG_IDX] = { /* HDMITX NON-SECURE*/
-		.phy_addr = 0xc883a000,
+		.phy_addr = 0xda808000,
 		.size = 0x2000,
 	},
 	[ELP_ESM_REG_IDX] = {

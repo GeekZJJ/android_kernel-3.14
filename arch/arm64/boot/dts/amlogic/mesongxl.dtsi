@@ -37,7 +37,7 @@
 			compatible = "arm,cortex-a53","arm,armv8";
 			reg = <0x0 0x0>;
 			enable-method = "psci";
-			cpu-idle-states = <&CPU_SLEEP_0>;
+			// cpu-idle-states = <&CPU_SLEEP_0>;
 		};
 
 		cpu1:cpu@1 {
@@ -45,14 +45,14 @@
 			compatible = "arm,cortex-a53","arm,armv8";
 			reg = <0x0 0x1>;
 			enable-method = "psci";
-			cpu-idle-states = <&CPU_SLEEP_0>;
+			// cpu-idle-states = <&CPU_SLEEP_0>;
 		};
 		cpu2:cpu@2 {
 			device_type = "cpu";
 			compatible = "arm,cortex-a53","arm,armv8";
 			reg = <0x0 0x2>;
 			enable-method = "psci";
-			cpu-idle-states = <&CPU_SLEEP_0>;
+			// cpu-idle-states = <&CPU_SLEEP_0>;
 		};
 
 		cpu3:cpu@3 {
@@ -60,21 +60,21 @@
 			compatible = "arm,cortex-a53","arm,armv8";
 			reg = <0x0 0x3>;
 			enable-method = "psci";
-			cpu-idle-states = <&CPU_SLEEP_0>;
+			// cpu-idle-states = <&CPU_SLEEP_0>;
 		};
 
-		idle-states {
-			entry-method = "arm,psci";
+		// idle-states {
+		// 	entry-method = "arm,psci";
 
-			CPU_SLEEP_0: cpu-sleep-0 {
-				compatible = "arm, idle-state";
-				arm,psci-suspend-param = <0x0010000>;
-				local-timer-stop;
-				entry-latency-us = <8000>;
-				exit-latency-us = <8000>;
-				min-residency-us = <20000>;
-			};
-		};
+		// 	CPU_SLEEP_0: cpu-sleep-0 {
+		// 		compatible = "arm, idle-state";
+		// 		arm,psci-suspend-param = <0x0010000>;
+		// 		local-timer-stop;
+		// 		entry-latency-us = <8000>;
+		// 		exit-latency-us = <8000>;
+		// 		min-residency-us = <20000>;
+		// 	};
+		// };
 	};
 
 	timer {
@@ -84,18 +84,18 @@
 			        <GIC_PPI 11 0xff01>,
 			        <GIC_PPI 10 0xff01>;
 	};
-	timer_bc {
-		compatible = "arm, meson-bc-timer";
-		reg=   <0x0 0xc1109990 0x0 0x4 0x0 0xc1109994 0x0 0x4>;
-		timer_name = "Meson TimerF";
-		clockevent-rating=<300>;
-		clockevent-shift=<20>;
-		clockevent-features=<0x23>;
-		interrupts = <0 60 1>;
-		bit_enable=<16>;
-		bit_mode=<12>;
-		bit_resolution=<0>;
-	};
+	// timer_bc {
+	// 	compatible = "arm, meson-bc-timer";
+	// 	reg=   <0x0 0xc1109990 0x0 0x4 0x0 0xc1109994 0x0 0x4>;
+	// 	timer_name = "Meson TimerF";
+	// 	clockevent-rating=<300>;
+	// 	clockevent-shift=<20>;
+	// 	clockevent-features=<0x23>;
+	// 	interrupts = <0 60 1>;
+	// 	bit_enable=<16>;
+	// 	bit_mode=<12>;
+	// 	bit_resolution=<0>;
+	// };
 	arm_pmu {
 		compatible = "arm,armv8-pmuv3";
 		interrupts = <0 137 4>,
@@ -157,9 +157,9 @@
 		storage_out_func = <0x82000024>;
 		storage_block_func = <0x82000025>;
 		storage_size_func = <0x82000027>;
-		storage_set_enctype = <0x8200006A>;
-		storage_get_enctype = <0x8200006B>;
-		storage_version = <0x8200006C>;
+		// storage_set_enctype = <0x8200006A>;
+		// storage_get_enctype = <0x8200006B>;
+		// storage_version = <0x8200006C>;
 	};
 	cpu_iomap{
 		compatible = "amlogic, iomap";
@@ -197,7 +197,7 @@
 	};
 	amlogic-jtag {
 		compatible = "amlogic, jtag";
-		status = "disable";
+		status = "okay";
 		pinctrl-names = "jtag_apao_pins", "jtag_apee_pins";
 		pinctrl-0 = <&jtag_apao_pins>;
 		pinctrl-1 = <&jtag_apee_pins>;
@@ -239,20 +239,20 @@
 			gpio-controller;
 			#gpio-cells = <2>;
 		};
-		external_eth_pins:external_eth_pins{
-			amlogic,setmask =<4 0xfffc00>;
-			amlogic,clrmask =<4 0x3fc>,
-					 <3 0xffcff800>;
-			amlogic,pins="GPIOZ_0","GPIOZ_1","GPIOZ_2","GPIOZ_3",
-			"GPIOZ_4","GPIOZ_5","GPIOZ_6","GPIOZ_7",
-			"GPIOZ_8","GPIOZ_9","GPIOZ_10","GPIOZ_11",
-			"GPIOZ_12","GPIOZ_13";
-		};
+		// external_eth_pins:external_eth_pins{
+		// 	amlogic,setmask =<4 0xfffc00>;
+		// 	amlogic,clrmask =<4 0x3fc>,
+		// 			 <3 0xffcff800>;
+		// 	amlogic,pins="GPIOZ_0","GPIOZ_1","GPIOZ_2","GPIOZ_3",
+		// 	"GPIOZ_4","GPIOZ_5","GPIOZ_6","GPIOZ_7",
+		// 	"GPIOZ_8","GPIOZ_9","GPIOZ_10","GPIOZ_11",
+		// 	"GPIOZ_12","GPIOZ_13";
+		// };
 		internal_eth_pins:internal_eth_pins{
 			amlogic,setmask =<4 0x3000000>;
 			amlogic,clrmask =<3 0x300000>;
 			amlogic,pins="GPIOZ_14","GPIOZ_15";
-    };
+    	};
 		jtag_apao_pins:jtag_apao_pin{
 			amlogic,clrmask = <6 0x7fe0000>;
 			amlogic,pins = "GPIOH_6","GPIOH_7","GPIOH_8","GPIOH_9";
@@ -267,11 +267,11 @@
 			amlogic,pins = "GPIOAO_7";
 		};
 
-		irblaster_pins:irblaster_pin{
-			amlogic,setmask = <AO 0x200000>;
-			amlogic,clrmask = <AO 0x1>;
-			amlogic,pins = "GPIOAO_7";
-		};
+		// irblaster_pins:irblaster_pin{
+		// 	amlogic,setmask = <AO 0x200000>;
+		// 	amlogic,clrmask = <AO 0x1>;
+		// 	amlogic,pins = "GPIOAO_7";
+		// };
 		ao_uart_pins:ao_uart{
 			amlogic,setmask=<AO 0x1800>;
 			amlogic,pins="GPIOAO_0", "GPIOAO_1";
@@ -314,6 +314,14 @@
 			amlogic,enable-output=<1>; /* 0:output, 1:input */
 			amlogic,pullup=<1>;
 			amlogic,pullupen=<1>;
+		};
+		sd_clear_all_pin:sd_clear_all_pin {
+			amlogic,setmask = <0x10 0x1800>;
+			amlogic,clrmask = <0x06 0x3f 0x06 0xfc0>;
+			amlogic,pins = "GPIOAO_0","GPIOAO_1";
+			amlogic,enable-output = <0x01>;
+			amlogic,pullup = <1>;
+			amlogic,pullupen = <1>;
 		};
 		sd_1bit_pins:sd_1bit_pins{
 			amlogic,setmask=<6 0x0000001c>,
@@ -376,7 +384,6 @@
 			amlogic,pullup=<1>;
 			amlogic,pullupen=<1>;
 		};
-
 
 		emmc_clk_cmd_pins:emmc_clk_cmd_pins{
 		    amlogic,setmask=<7 0x60000000>;
@@ -475,11 +482,11 @@
 			amlogic,pins="GPIOAO_8";
 		};
 
-		ao_i2c_master:ao_i2c{
-			amlogic,setmask=<AO 0x60>;
-			amlogic,clrmask=<AO 0x1800006>;
-			amlogic,pins="GPIOAO_4","GPIOAO_5";
-		};
+		// ao_i2c_master:ao_i2c{
+		// 	amlogic,setmask=<AO 0x60>;
+		// 	amlogic,clrmask=<AO 0x1800006>;
+		// 	amlogic,pins="GPIOAO_4","GPIOAO_5";
+		// };
 		a_i2c_master:a_i2c{
 			amlogic,setmask=<1 0xc000>;
 			amlogic,clrmask=<3 0x18 2 0x18000 2 0xc0 1 0x600000>;
@@ -495,14 +502,15 @@
 			amlogic,clrmask=<2 0x1800 1 0x200 2 0x20>;
 			amlogic,pins="GPIODV_28","GPIODV_29";
 		};
-		c_i2c_master_pin1:c_i2c_pin1{
-			amlogic,setmask=<1 0x30000>;
-			amlogic,clrmask=<1 0x2000000 3 0x20>;
-			amlogic,pins="GPIODV_18","GPIODV_19";
-		};
+		// c_i2c_master_pin1:c_i2c_pin1{
+		// 	amlogic,setmask=<1 0x30000>;
+		// 	amlogic,clrmask=<1 0x2000000 3 0x20>;
+		// 	amlogic,pins="GPIODV_18","GPIODV_19";
+		// };
 		d_i2c_master:d_i2c{
 			amlogic,setmask=<5 0x30>;
-			amlogic,clrmask=<5 0x300c03 6 0x3>;
+			// amlogic,clrmask=<5 0x300c03 6 0x3>;
+			amlogic,clrmask=<5 0x300c03>;
 			amlogic,pins="GPIOX_10","GPIOX_11";
 		};
 
@@ -546,22 +554,22 @@
 		       0x0 0xc1108764 0x0 0x4>;
 	};
 
-	i2c_ao: i2c@c8100500{ /*I2C-AO*/
-		compatible = "amlogic, meson-i2c";
-		dev_name = "i2c-AO";
-		status = "disabled";
-		reg = <0x0 0xc8100500 0x0 0x1d>;
-		device_id = <0>;
-		pinctrl-names="default";
-		pinctrl-0=<&ao_i2c_master>;
-		#address-cells = <1>;
-		#size-cells = <0>;
-		use_pio = <0>;
-		master_i2c_speed = <300000>;
-		clocks = <&clock CLK_81>;
-		clock-names = "clk_i2c";
-		resets = <&clock GCLK_IDX_I2C>;
-	};
+	// i2c_ao: i2c@c8100500{ /*I2C-AO*/
+	// 	compatible = "amlogic, meson-i2c";
+	// 	dev_name = "i2c-AO";
+	// 	status = "disabled";
+	// 	reg = <0x0 0xc8100500 0x0 0x1d>;
+	// 	device_id = <0>;
+	// 	pinctrl-names="default";
+	// 	pinctrl-0=<&ao_i2c_master>;
+	// 	#address-cells = <1>;
+	// 	#size-cells = <0>;
+	// 	use_pio = <0>;
+	// 	master_i2c_speed = <300000>;
+	// 	clocks = <&clock CLK_81>;
+	// 	clock-names = "clk_i2c";
+	// 	resets = <&clock GCLK_IDX_I2C>;
+	// };
 	i2c_a: i2c@c1108500{ /*I2C-A*/
 		compatible = "amlogic, meson-i2c";
 		dev_name = "i2c-A";
@@ -685,6 +693,7 @@
 		};
 
 	};
+	//修复用mgv2000dtb启动panic,暂时关闭
 	remote:rc@c8100580 {
 		compatible = "amlogic, aml_remote";
 		dev_name = "meson-remote";
@@ -698,17 +707,17 @@
 		map = <&custom_maps>;
 		max_frame_time = <200>; /*set software decoder max frame time*/
 	};
-	meson-irblaster {
-		compatible = "amlogic, am_irblaster";
-		dev_name = "meson-irblaster";
-		status = "disabled";
-		pinctrl-names = "default";
-		pinctrl-0 = <&irblaster_pins>;
-	};
+	// meson-irblaster {
+	// 	compatible = "amlogic, am_irblaster";
+	// 	dev_name = "meson-irblaster";
+	// 	status = "disabled";
+	// 	pinctrl-names = "default";
+	// 	pinctrl-0 = <&irblaster_pins>;
+	// };
 	custom_maps:custom_maps {
 		mapnum = <2>;
 		map0 = <&map_0>;
-		map1 = <&map_1>;
+		// map1 = <&map_1>;
 		map_0: map_0{
 			mapname = "khadas-ir";
 			customcode = <0xff00>;
@@ -735,63 +744,63 @@
 				REMOTE_KEY(0x01,158)
 				REMOTE_KEY(0x48,102)>;
 		};
-		map_1: map_1{
-			mapname = "dvb-ir";
-			customcode = <0xfe01>;
-			release_delay = <80>;
-			fn_key_scancode = <0x0d>;
-			cursor_left_scancode = <0x54>;
-			cursor_right_scancode = <0x15>;
-			cursor_up_scancode = <0x59>;
-			cursor_down_scancode = <0x51>;
-			cursor_ok_scancode = <0x55>;
-			size  = <45>;
-			keymap = <REMOTE_KEY(0x0d,272)
-				REMOTE_KEY(0x00,116)
-				REMOTE_KEY(0x50,102)
-				REMOTE_KEY(0x41,113)
-				REMOTE_KEY(0x48,115)
-				REMOTE_KEY(0x0b,114)
-				REMOTE_KEY(0x58,139)
-				REMOTE_KEY(0x59,103)
-				REMOTE_KEY(0x51,108)
-				REMOTE_KEY(0x54,105)
-				REMOTE_KEY(0x15,106)
-				REMOTE_KEY(0x55,232)
-				REMOTE_KEY(0x1e,11)
-				REMOTE_KEY(0x13,2)
-				REMOTE_KEY(0x12,3)
-				REMOTE_KEY(0x10,4)
-				REMOTE_KEY(0x17,5)
-				REMOTE_KEY(0x16,6)
-				REMOTE_KEY(0x14,7)
-				REMOTE_KEY(0x1b,8)
-				REMOTE_KEY(0x1a,9)
-				REMOTE_KEY(0x18,10)
-				REMOTE_KEY(0x11,14)
-				REMOTE_KEY(0x07,128)
-				REMOTE_KEY(0x40,121)
-				REMOTE_KEY(0x03,120)
-				REMOTE_KEY(0x01,123)
-				REMOTE_KEY(0x05,122)
-				REMOTE_KEY(0x44,119)
-				REMOTE_KEY(0x19,158)
-				REMOTE_KEY(0x04,104)
-				REMOTE_KEY(0x06,109)
-				REMOTE_KEY(0x5c,365)
-				REMOTE_KEY(0x1d,358)
-				REMOTE_KEY(0x0a,398)
-				REMOTE_KEY(0x4d,399)
-				REMOTE_KEY(0x0e,400)
-				REMOTE_KEY(0x0c,401)
-				REMOTE_KEY(0x1c,750)
-				REMOTE_KEY(0x08,751)
-				REMOTE_KEY(0x45,752)
-				REMOTE_KEY(0x1f,753)
-				REMOTE_KEY(0x4c,754)
-				REMOTE_KEY(0x49,755)
-				REMOTE_KEY(0x09,756)>;
-		};
+		// map_1: map_1{
+		// 	mapname = "dvb-ir";
+		// 	customcode = <0xfe01>;
+		// 	release_delay = <80>;
+		// 	fn_key_scancode = <0x0d>;
+		// 	cursor_left_scancode = <0x54>;
+		// 	cursor_right_scancode = <0x15>;
+		// 	cursor_up_scancode = <0x59>;
+		// 	cursor_down_scancode = <0x51>;
+		// 	cursor_ok_scancode = <0x55>;
+		// 	size  = <45>;
+		// 	keymap = <REMOTE_KEY(0x0d,272)
+		// 		REMOTE_KEY(0x00,116)
+		// 		REMOTE_KEY(0x50,102)
+		// 		REMOTE_KEY(0x41,113)
+		// 		REMOTE_KEY(0x48,115)
+		// 		REMOTE_KEY(0x0b,114)
+		// 		REMOTE_KEY(0x58,139)
+		// 		REMOTE_KEY(0x59,103)
+		// 		REMOTE_KEY(0x51,108)
+		// 		REMOTE_KEY(0x54,105)
+		// 		REMOTE_KEY(0x15,106)
+		// 		REMOTE_KEY(0x55,232)
+		// 		REMOTE_KEY(0x1e,11)
+		// 		REMOTE_KEY(0x13,2)
+		// 		REMOTE_KEY(0x12,3)
+		// 		REMOTE_KEY(0x10,4)
+		// 		REMOTE_KEY(0x17,5)
+		// 		REMOTE_KEY(0x16,6)
+		// 		REMOTE_KEY(0x14,7)
+		// 		REMOTE_KEY(0x1b,8)
+		// 		REMOTE_KEY(0x1a,9)
+		// 		REMOTE_KEY(0x18,10)
+		// 		REMOTE_KEY(0x11,14)
+		// 		REMOTE_KEY(0x07,128)
+		// 		REMOTE_KEY(0x40,121)
+		// 		REMOTE_KEY(0x03,120)
+		// 		REMOTE_KEY(0x01,123)
+		// 		REMOTE_KEY(0x05,122)
+		// 		REMOTE_KEY(0x44,119)
+		// 		REMOTE_KEY(0x19,158)
+		// 		REMOTE_KEY(0x04,104)
+		// 		REMOTE_KEY(0x06,109)
+		// 		REMOTE_KEY(0x5c,365)
+		// 		REMOTE_KEY(0x1d,358)
+		// 		REMOTE_KEY(0x0a,398)
+		// 		REMOTE_KEY(0x4d,399)
+		// 		REMOTE_KEY(0x0e,400)
+		// 		REMOTE_KEY(0x0c,401)
+		// 		REMOTE_KEY(0x1c,750)
+		// 		REMOTE_KEY(0x08,751)
+		// 		REMOTE_KEY(0x45,752)
+		// 		REMOTE_KEY(0x1f,753)
+		// 		REMOTE_KEY(0x4c,754)
+		// 		REMOTE_KEY(0x49,755)
+		// 		REMOTE_KEY(0x09,756)>;
+		// };
 	};
 
 	rng {
@@ -835,31 +844,31 @@
 		interrupts = <0 81 1>;
 		device_id = <0>;
 	};
-	aml_aes{
-		 compatible = "amlogic,aes_dma";
-		 dev_name = "aml_aes_dma";
-		 interrupts = <0 188 1
-			 0 189 1>;
-		 reg = <0x0 0xc883e000 0x0 0x28>;
-	 };
-	 aml_tdes{
-		 compatible = "amlogic,des_dma,tdes_dma";
-		 dev_name = "aml_tdes_dma";
-		 interrupts = <0 188 1
-			 0 189 1>;
-		 reg = <0x0 0xc883e000 0x0 0x28>;
-	 };
-	 aml_sha{
-		 compatible = "amlogic,sha_dma";
-		 dev_name = "aml_sha_dma";
-		 interrupts = <0 188 1
-			 0 189 1>;
-		 reg = <0x0 0xc883e000 0x0 0x28>;
-	 };
+	// aml_aes{
+	// 	 compatible = "amlogic,aes_dma";
+	// 	 dev_name = "aml_aes_dma";
+	// 	 interrupts = <0 188 1
+	// 		 0 189 1>;
+	// 	 reg = <0x0 0xc883e000 0x0 0x28>;
+	//  };
+	//  aml_tdes{
+	// 	 compatible = "amlogic,des_dma,tdes_dma";
+	// 	 dev_name = "aml_tdes_dma";
+	// 	 interrupts = <0 188 1
+	// 		 0 189 1>;
+	// 	 reg = <0x0 0xc883e000 0x0 0x28>;
+	//  };
+	//  aml_sha{
+	// 	 compatible = "amlogic,sha_dma";
+	// 	 dev_name = "aml_sha_dma";
+	// 	 interrupts = <0 188 1
+	// 		 0 189 1>;
+	// 	 reg = <0x0 0xc883e000 0x0 0x28>;
+	//  };
 
 	pwm:meson-pwm {
 		compatible = "amlogic, meson-pwm";
-		status = "okay";
+		status = "disabled";
 		#pwm-cells = <2>;
 		pwm-outputs = <PWM_A>,<PWM_B>,<PWM_C>,<PWM_D>,
 					<PWM_E>,<PWM_F>,<PWM_AO_A>,<PWM_AO_B>,

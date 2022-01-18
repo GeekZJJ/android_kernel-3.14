@@ -131,7 +131,7 @@ void audio_set_aiubuf(u32 addr, u32 size, unsigned int channel)
 				0 << 2);
 
 	if (channel == 8) {
-		pr_info("%s channel == 8\n", __func__);
+		// pr_info("%s channel == 8\n", __func__);
 		/* [31:16] IRQ block. */
 		aml_aiu_write(AIU_MEM_I2S_MASKS, (24 << 16) |
 		/* [15: 8] chan_mem_mask.
@@ -231,7 +231,7 @@ static void i2sin_fifo0_set_buf(u32 addr, u32 size,
 			   | (1 << AUDIN_FIFO0_LOAD) /* load start address */
 			   | (din_sel << AUDIN_FIFO0_DIN_SEL) /*DIN from i2sin*/
 			   | (4 << AUDIN_FIFO0_ENDIAN) /*AUDIN_FIFO0_ENDIAN*/
-			   | ((ch == 2?2:1) << AUDIN_FIFO0_CHAN) /*ch mode ctl*/
+			   | (2 << AUDIN_FIFO0_CHAN) /* two channel */
 			   | (1 << AUDIN_FIFO0_UG) /* Urgent request. */
 	);
 
@@ -240,8 +240,7 @@ static void i2sin_fifo0_set_buf(u32 addr, u32 size,
 			   | din_pos << 0);	/* fifo0_din_pos */
 
 	if (audio_in_source == 0) {
-		aml_audin_write(AUDIN_I2SIN_CTRL,
-				   ((0xf>>(4 - ch/2)) << I2SIN_CHAN_EN)
+		aml_audin_write(AUDIN_I2SIN_CTRL, (1 << I2SIN_CHAN_EN)
 				   | (3 << I2SIN_SIZE)
 				   | (1 << I2SIN_LRCLK_INVT)
 				   | (1 << I2SIN_LRCLK_SKEW)
@@ -296,7 +295,7 @@ static void spdifin_reg_set(void)
 	u32 period_96k = (period_data / 48 + 1) >> 1;	/* 96k min period */
 	u32 period_192k = (period_data / 96 + 1) >> 1;	/* 192k min period */
 
-	pr_info("spdifin_reg_set: clk_rate=%d\n", clk_rate);
+	// pr_info("spdifin_reg_set: clk_rate=%d\n", clk_rate);
 
 	aml_audin_write(AUDIN_SPDIF_MODE,
 		       (aml_audin_read(AUDIN_SPDIF_MODE) & 0x7fffc000) |
@@ -358,14 +357,14 @@ static void spdifin_fifo1_set_buf(u32 addr, u32 size, u32 src)
 void audio_in_i2s_set_buf(u32 addr, u32 size,
 	u32 i2s_mode, u32 i2s_sync, u32 din_sel)
 {
-	pr_info("i2sin_fifo0_set_buf\n");
+	// pr_info("i2sin_fifo0_set_buf\n");
 	i2sin_fifo0_set_buf(addr, size, i2s_mode, i2s_sync, din_sel);
 	audio_in_buf_ready = 1;
 }
 
 void audio_in_spdif_set_buf(u32 addr, u32 size, u32 src)
 {
-	pr_debug("spdifin_fifo1_set_buf, src = %d\n", src);
+	// pr_debug("spdifin_fifo1_set_buf, src = %d\n", src);
 	spdifin_fifo1_set_buf(addr, size, src);
 }
 
@@ -432,7 +431,7 @@ unsigned int audio_in_i2s_rd_ptr(void)
 {
 	unsigned int val;
 	val = aml_audin_read(AUDIN_FIFO0_RDPTR);
-	pr_info("audio in i2s rd ptr: %x\n", val);
+	// pr_info("audio in i2s rd ptr: %x\n", val);
 	return val;
 }
 
@@ -440,7 +439,7 @@ unsigned int audio_in_spdif_rd_ptr(void)
 {
 	unsigned int val;
 	val = aml_audin_read(AUDIN_FIFO1_RDPTR);
-	pr_info("audio in spdif rd ptr: %x\n", val);
+	// pr_info("audio in spdif rd ptr: %x\n", val);
 	return val;
 }
 
@@ -767,13 +766,13 @@ void audio_hw_958_raw(void)
 	aml_aiu_write(AIU_958_SYNWORD2_MASK, IEC958_syncword2_mask);
 	aml_aiu_write(AIU_958_SYNWORD3_MASK, IEC958_syncword3_mask);
 
-	pr_info("%s: %d\n", __func__, __LINE__);
-	pr_info("\tBPF: %x\n", IEC958_bpf);
-	pr_info("\tBRST: %x\n", IEC958_brst);
-	pr_info("\tLENGTH: %x\n", IEC958_length);
-	pr_info("\tPADDSIZE: %x\n", IEC958_length);
-	pr_info("\tsyncword: %x, %x, %x\n\n", IEC958_syncword1,
-		IEC958_syncword2, IEC958_syncword3);
+	// pr_info("%s: %d\n", __func__, __LINE__);
+	// pr_info("\tBPF: %x\n", IEC958_bpf);
+	// pr_info("\tBRST: %x\n", IEC958_brst);
+	// pr_info("\tLENGTH: %x\n", IEC958_length);
+	// pr_info("\tPADDSIZE: %x\n", IEC958_length);
+	// pr_info("\tsyncword: %x, %x, %x\n\n", IEC958_syncword1,
+	// 	IEC958_syncword2, IEC958_syncword3);
 
 }
 
@@ -815,7 +814,7 @@ void audio_set_958_mode(unsigned mode, struct _aiu_958_raw_setting_t *set)
 		aml_aiu_update_bits(AIU_MEM_IEC958_CONTROL,
 				     0x7 << 3, 0x1 << 3);
 
-		pr_info("IEC958 RAW\n");
+		// pr_info("IEC958 RAW\n");
 	} else if (mode == AIU_958_MODE_PCM32) {
 		audio_hw_set_958_pcm24(set);
 #ifdef CONFIG_SND_AML_SPLIT_MODE
@@ -834,7 +833,7 @@ void audio_set_958_mode(unsigned mode, struct _aiu_958_raw_setting_t *set)
 		aml_aiu_update_bits(AIU_MEM_IEC958_CONTROL,
 				     0x7 << 3, 0);
 
-		pr_info("IEC958 PCM32\n");
+		// pr_info("IEC958 PCM32\n");
 	} else if (mode == AIU_958_MODE_PCM24) {
 		audio_hw_set_958_pcm24(set);
 #ifdef CONFIG_SND_AML_SPLIT_MODE
@@ -853,7 +852,7 @@ void audio_set_958_mode(unsigned mode, struct _aiu_958_raw_setting_t *set)
 		aml_aiu_update_bits(AIU_MEM_IEC958_CONTROL,
 				     0x7 << 3, 0);
 
-		pr_info("IEC958 24bit\n");
+		// pr_info("IEC958 24bit\n");
 	} else if (mode == AIU_958_MODE_PCM16) {
 		audio_hw_set_958_pcm24(set);
 		aml_aiu_write(AIU_958_MISC, 0x2042);
@@ -870,7 +869,7 @@ void audio_set_958_mode(unsigned mode, struct _aiu_958_raw_setting_t *set)
 		/* endian */
 		aml_aiu_update_bits(AIU_MEM_IEC958_CONTROL,
 				     0x7 << 3, 0);
-		pr_info("IEC958 16bit\n");
+		// pr_info("IEC958 16bit\n");
 	}
 
 	audio_hw_958_reset(0, 1);

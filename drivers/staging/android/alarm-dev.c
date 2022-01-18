@@ -362,9 +362,9 @@ static void devalarm_triggered(struct devalarm *alarm)
 	unsigned long flags;
 	uint32_t alarm_type_mask = 1U << alarm->type;
 
-	alarm_dbg(INT, "%s: type %d\n", __func__, alarm->type);
+	// alarm_dbg(INT, "%s: type %d\n", __func__, alarm->type);
 	if (is_wakeup(alarm->type)) {
-		alarm_dbg(INFO, "alarm lock suspend\n");
+		// alarm_dbg(INFO, "alarm lock suspend\n");
 		wake_lock_timeout(&alarm_prevent_sleep, 2 * HZ);
 	}
 	spin_lock_irqsave(&alarm_slock, flags);

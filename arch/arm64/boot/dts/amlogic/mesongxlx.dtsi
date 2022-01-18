@@ -21,6 +21,10 @@
 #include <dt-bindings/reset/aml_gxlx.h>
 #include <dt-bindings/thermal/thermal.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/input/meson_rc.h>
+#include <dt-bindings/pwm/pwm.h>
+#include <dt-bindings/pwm/meson.h>
 #include "mesongxbb-gpu-mali450.dtsi"
 / {
 	cpus:cpus {
@@ -204,7 +208,7 @@
 			gpio-controller;
 			#gpio-cells = <2>;
 		};
-		eth_pins:eth_pins{
+		internal_eth_pins:internal_eth_pins{
                         amlogic,setmask =<4 0x3000000>;
                         amlogic,clrmask =<3 0x300000>;
                         amlogic,pins="GPIOZ_14","GPIOZ_15";
@@ -615,14 +619,129 @@
 		};
 
 	};
-	meson_remote:meson_remote {
+
+	meson_remote:rc@c8100580 {
 		compatible = "amlogic, aml_remote";
 		dev_name = "meson-remote";
-		status = "disabled";
+		reg = <0x0 0xc8100580 0x00 0x44>, /*Multi-format IR controller*/
+			<0x0 0xc8100480 0x00 0x20>; /*Legacy IR controller*/
+		status = "okay";
+		protocol = <REMOTE_TYPE_NEC>;
 		remote_ao_offset = <0x580>; /* 0x400 + (0x20 + idx)<<2 -- old ; 0x400 + (0x60 +idx)<<2 --new   */
 		interrupts = <0 196 1>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&remote_pins>;
+		led-gpios = <&gpio 0x0e 0x00>;
+		led_status_on = <0x01>;
+		map = <&custom_maps>;
+		max_frame_time = <200>; /*set software decoder max frame time*/
+	};
+
+	custom_maps:custom_maps {
+		mapnum = <2>;
+		map0 = <&map_0>;
+		map1 = <&map_1>;
+		// map_2: map_2{
+		// 	mapname = "mgv2000-ir";
+		// 	customcode = <0xdd22>;
+		// 	release_delay = <80>;
+		// 	fn_key_scancode = <0x0d>;
+		// 	cursor_left_scancode = <0x99>;
+		// 	cursor_right_scancode = <0xc1>;
+		// 	cursor_up_scancode = <0xca>;
+		// 	cursor_down_scancode = <0xd2>;
+		// 	cursor_ok_scancode = <0xce>;
+		// 	size  = <5>;
+		// 	keymap = <
+		// 		REMOTE_KEY(0x95,1) //back
+		// 		REMOTE_KEY(0x92,2) //1
+		// 		REMOTE_KEY(0x93,3)
+		// 		REMOTE_KEY(0x82,139)//menu
+		// 		REMOTE_KEY(0x88,102)>;//home
+		// };
+		map_0: map_0{
+			mapname = "khadas-ir";
+			customcode = <0xff00>;
+			release_delay = <80>;
+			fn_key_scancode = <0x5c>;
+			fn_key_scancode_other = <0x5b>;
+			cursor_left_scancode = <0x0e>;
+			cursor_right_scancode = <0x1a>;
+			cursor_up_scancode = <0x03>;
+			cursor_down_scancode = <0x02>;
+			cursor_ok_scancode = <0x07>;
+			size  = <13>;
+			keymap = <REMOTE_KEY(0x14,116)
+				REMOTE_KEY(0x13,139)
+				REMOTE_KEY(0x03,103)
+				REMOTE_KEY(0x02,108)
+				REMOTE_KEY(0x0e,105)
+				REMOTE_KEY(0x1a,106)
+				REMOTE_KEY(0x07,232)
+				REMOTE_KEY(0x58,114)
+				REMOTE_KEY(0x5c,63)
+				REMOTE_KEY(0x5b,63)
+				REMOTE_KEY(0x0b,115)
+				REMOTE_KEY(0x01,158)
+				REMOTE_KEY(0x48,102)>;
+		};
+		map_1: map_1{
+			mapname = "dvb-ir";
+			customcode = <0xfe01>;
+			release_delay = <80>;
+			fn_key_scancode = <0x0d>;
+			cursor_left_scancode = <0x54>;
+			cursor_right_scancode = <0x15>;
+			cursor_up_scancode = <0x59>;
+			cursor_down_scancode = <0x51>;
+			cursor_ok_scancode = <0x55>;
+			size  = <45>;
+			keymap = <REMOTE_KEY(0x0d,272)
+				REMOTE_KEY(0x00,116)
+				REMOTE_KEY(0x50,102)
+				REMOTE_KEY(0x41,113)
+				REMOTE_KEY(0x48,115)
+				REMOTE_KEY(0x0b,114)
+				REMOTE_KEY(0x58,139)
+				REMOTE_KEY(0x59,103)
+				REMOTE_KEY(0x51,108)
+				REMOTE_KEY(0x54,105)
+				REMOTE_KEY(0x15,106)
+				REMOTE_KEY(0x55,232)
+				REMOTE_KEY(0x1e,11)
+				REMOTE_KEY(0x13,2)
+				REMOTE_KEY(0x12,3)
+				REMOTE_KEY(0x10,4)
+				REMOTE_KEY(0x17,5)
+				REMOTE_KEY(0x16,6)
+				REMOTE_KEY(0x14,7)
+				REMOTE_KEY(0x1b,8)
+				REMOTE_KEY(0x1a,9)
+				REMOTE_KEY(0x18,10)
+				REMOTE_KEY(0x11,14)
+				REMOTE_KEY(0x07,128)
+				REMOTE_KEY(0x40,121)
+				REMOTE_KEY(0x03,120)
+				REMOTE_KEY(0x01,123)
+				REMOTE_KEY(0x05,122)
+				REMOTE_KEY(0x44,119)
+				REMOTE_KEY(0x19,158)
+				REMOTE_KEY(0x04,104)
+				REMOTE_KEY(0x06,109)
+				REMOTE_KEY(0x5c,365)
+				REMOTE_KEY(0x1d,358)
+				REMOTE_KEY(0x0a,398)
+				REMOTE_KEY(0x4d,399)
+				REMOTE_KEY(0x0e,400)
+				REMOTE_KEY(0x0c,401)
+				REMOTE_KEY(0x1c,750)
+				REMOTE_KEY(0x08,751)
+				REMOTE_KEY(0x45,752)
+				REMOTE_KEY(0x1f,753)
+				REMOTE_KEY(0x4c,754)
+				REMOTE_KEY(0x49,755)
+				REMOTE_KEY(0x09,756)>;
+		};
 	};
 
 	rng {
@@ -664,6 +783,32 @@
 		clock-names = "spicc_clk";
 		interrupts = <0 81 1>;
 		device_id = <0>;
+	};
+
+	pwm:meson-pwm {
+		compatible = "amlogic, meson-pwm";
+		status = "disabled";
+		#pwm-cells = <2>;
+		pwm-outputs = <PWM_A>,<PWM_B>,<PWM_C>,<PWM_D>,
+					<PWM_E>,<PWM_F>,<PWM_AO_A>,<PWM_AO_B>,
+					<PWM_A2>,<PWM_B2>,<PWM_C2>,<PWM_D2>,
+					<PWM_E2>,<PWM_F2>,<PWM_AO_A2>,<PWM_AO_B2>;
+		reg = <0x0 0xc1108550  0x0 0x1c>,
+		      <0x0 0xc1108640  0x0 0x1c>,
+		      <0x0 0xc11086c0  0x0 0x1c>,
+		      <0x0 0xc8100550  0x0 0x1c>;
+		clocks = <&clock CLK_XTAL>,
+			 <&clock CLK_VID_PLL>,
+			 <&clock CLK_FPLL_DIV4>,
+			 <&clock CLK_FPLL_DIV3>;
+		clock-names = "xtal",
+			      "vid_pll_clk",
+			      "fclk_div4",
+			      "fclk_div3";
+		clock-select = <XTAL_CLK>,<XTAL_CLK>,<XTAL_CLK>,<XTAL_CLK>,
+		               <XTAL_CLK>,<XTAL_CLK>,<XTAL_CLK>,<XTAL_CLK>;
+	                   /*all channels use the default clock source XTAL_CLK*/
+	                   /*and you can shoose it in file dt-bindings/pwm/meson.h*/
 	};
 
 };/* end of / */

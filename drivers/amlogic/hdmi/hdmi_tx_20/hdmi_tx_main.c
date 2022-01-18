@@ -2946,12 +2946,12 @@ static enum hdmi_audio_fs aud_samp_rate_map(unsigned int rate)
 
 	for (i = 0; i < ARRAY_SIZE(map_fs); i++) {
 		if (map_fs[i].rate == rate) {
-			hdmi_print(IMP, AUD "aout notify rate %d\n",
-				rate);
+			// hdmi_print(IMP, AUD "aout notify rate %d\n",
+			// 	rate);
 			return map_fs[i].fs;
 		}
 	}
-	hdmi_print(IMP, AUD "get FS_MAX\n");
+	// hdmi_print(IMP, AUD "get FS_MAX\n");
 	return FS_MAX;
 }
 
@@ -2988,12 +2988,12 @@ static enum hdmi_audio_sampsize aud_size_map(unsigned int bits)
 
 	for (i = 0; i < ARRAY_SIZE(aud_size_map_ss); i++) {
 		if (bits == aud_size_map_ss[i].sample_bits) {
-			hdmi_print(IMP, AUD "aout notify size %d\n",
-				bits);
+			// hdmi_print(IMP, AUD "aout notify size %d\n",
+			// 	bits);
 			return aud_size_map_ss[i].ss;
 		}
 	}
-	hdmi_print(IMP, AUD "get SS_MAX\n");
+	// hdmi_print(IMP, AUD "get SS_MAX\n");
 	return SS_MAX;
 }
 
@@ -3058,7 +3058,9 @@ static int hdmitx_notify_callback_a(struct notifier_block *block,
 	}
 	}
 	if (hdmitx_device.audio_param_update_flag == 0)
-		hdmi_print(INF, AUD "no update\n");
+	{
+		// hdmi_print(INF, AUD "no update\n");
+	}
 	else
 		hdmitx_device.audio_notify_flag = 1;
 

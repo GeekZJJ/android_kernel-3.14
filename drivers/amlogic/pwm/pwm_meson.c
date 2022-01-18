@@ -653,6 +653,7 @@ static int pwm_aml_parse_addr(struct aml_pwm_chip *chip)
 	case MESON_CPU_MAJOR_ID_GXBB:
 	case MESON_CPU_MAJOR_ID_GXTVBB:
 	case MESON_CPU_MAJOR_ID_GXL:
+	case MESON_CPU_MAJOR_ID_GXLX:
 	case MESON_CPU_MAJOR_ID_GXM:
 		pwm_aml_parse_addr_gxbb(chip);
 	break;
@@ -721,6 +722,7 @@ static int pwm_aml_parse_dt(struct aml_pwm_chip *chip)
 	break;
 	case MESON_CPU_MAJOR_ID_GXTVBB:
 	case MESON_CPU_MAJOR_ID_GXL:
+	case MESON_CPU_MAJOR_ID_GXLX:
 	case MESON_CPU_MAJOR_ID_GXM:
 	case MESON_CPU_MAJOR_ID_TXL:
 		if ((output_co > AML_PWM_GXTVBB_NUM) ||
@@ -800,6 +802,7 @@ static int pwm_aml_probe(struct platform_device *pdev)
 		break;
 	case MESON_CPU_MAJOR_ID_GXTVBB:
 	case MESON_CPU_MAJOR_ID_GXL:
+	case MESON_CPU_MAJOR_ID_GXLX:
 	case MESON_CPU_MAJOR_ID_GXM:
 	case MESON_CPU_MAJOR_ID_TXL:
 		chip->inverter_mask = BIT(chip->chip.npwm/2) - 1;
